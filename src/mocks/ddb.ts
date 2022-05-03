@@ -1,6 +1,10 @@
 import AWS from 'aws-sdk';
 import AWSMock from 'aws-sdk-mock';
 import {
+  BatchGetItemInput,
+  BatchGetItemOutput,
+  BatchWriteItemInput,
+  BatchWriteItemOutput,
   DeleteItemInput,
   DeleteItemOutput,
   GetItemInput,
@@ -9,6 +13,12 @@ import {
   PutItemOutput,
   QueryInput,
   QueryOutput,
+  ScanInput,
+  ScanOutput,
+  TransactGetItemsInput,
+  TransactGetItemsOutput,
+  TransactWriteItemsInput,
+  TransactWriteItemsOutput,
   UpdateItemInput,
   UpdateItemOutput,
 } from 'aws-sdk/clients/dynamodb';
@@ -37,8 +47,37 @@ export class DdbMock {
     this.mockDynamoose();
   }
 
+  public onBatchGetItem(callback?: Callback<BatchGetItemInput, BatchGetItemOutput>): void {
+    this.mockDynamodb('batchGetItem', callback);
+    this.mockDynamoose();
+  }
+
+  public onBatchWriteItem(callback?: Callback<BatchWriteItemInput, BatchWriteItemOutput>): void {
+    this.mockDynamodb('batchWriteItem', callback);
+    this.mockDynamoose();
+  }
+
+  public onTransactGetItems(
+    callback?: Callback<TransactGetItemsInput, TransactGetItemsOutput>,
+  ): void {
+    this.mockDynamodb('transactGetItems', callback);
+    this.mockDynamoose();
+  }
+
+  public onTransactWriteItems(
+    callback?: Callback<TransactWriteItemsInput, TransactWriteItemsOutput>,
+  ): void {
+    this.mockDynamodb('transactWriteItems', callback);
+    this.mockDynamoose();
+  }
+
   public onQuery(callback?: Callback<QueryInput, QueryOutput>): void {
     this.mockDynamodb('query', callback);
+    this.mockDynamoose();
+  }
+
+  public onScan(callback?: Callback<ScanInput, ScanOutput>): void {
+    this.mockDynamodb('scan', callback);
     this.mockDynamoose();
   }
 
