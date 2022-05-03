@@ -17,8 +17,6 @@ import dynamoose from 'dynamoose';
 AWSMock.setSDKInstance(AWS);
 
 export class DdbMock {
-  private readonly ddb = new AWS.DynamoDB({ region: 'eu-central-1' });
-
   public onGetItem(callback?: Callback<GetItemInput, GetItemOutput>): void {
     this.mockDynamodb('getItem', callback);
     this.mockDynamoose();
@@ -66,7 +64,7 @@ export class DdbMock {
 
   private mockDynamoose(): void {
     if (!dynamoose) return;
-    dynamoose.aws.ddb.set(this.ddb);
+    dynamoose.aws.ddb.set(new AWS.DynamoDB({ region: 'eu-central-1' }));
   }
 }
 
