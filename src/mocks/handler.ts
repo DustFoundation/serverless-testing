@@ -1,6 +1,10 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { randomUUID } from 'node:crypto';
 
+export function mockHandler(handler: APIGatewayProxyHandler): HandlerMock {
+  return new HandlerMock(handler);
+}
+
 export class HandlerMock {
   private readonly handler: APIGatewayProxyHandler;
 
@@ -8,19 +12,9 @@ export class HandlerMock {
     this.handler = handler;
   }
 
-  public async execute<ResponseBody = any>(
-    options: Partial<
-      Pick<
-        APIGatewayProxyEvent,
-        | 'body'
-        | 'headers'
-        | 'httpMethod'
-        | 'isBase64Encoded'
-        | 'pathParameters'
-        | 'queryStringParameters'
-      >
-    > & { authorizerId?: string; responseToJson?: boolean } = {},
-  ): Promise<(Omit<APIGatewayProxyResult, 'body'> & { body: ResponseBody }) | never> {
+  public async execute<T = any>(
+    options: HandlerMockExecuteOptions = {},
+  ): Promise<HandlerMockExecuteResult<T> | never> {
     const response = await this.handler(
       {
         body: options.body ?? null,
@@ -40,6 +34,7 @@ export class HandlerMock {
             scopes: undefined,
             principalId: 'offlineContext_authorizer_principalId',
             id: options.authorizerId ?? randomUUID(),
+            groups: options.authorizerGroups ?? [],
           },
           domainName: 'offlineContext_domainName',
           domainPrefix: 'offlineContext_domainPrefix',
@@ -95,7 +90,25 @@ export class HandlerMock {
 
     return {
       ...response,
-      body: (options.responseToJson ? JSON.parse(response.body) : response.body) as ResponseBody,
+      body: (options.responseToJson ? JSON.parse(response.body) : response.body) as T,
     };
   }
 }
+
+export type HandlerMockExecuteOptions = Partial<
+  Pick<
+    APIGatewayProxyEvent,
+    | 'body'
+    | 'headers'
+    | 'httpMethod'
+    | 'isBase64Encoded'
+    | 'pathParameters'
+    | 'queryStringParameters'
+  >
+> & {
+  authorizerId?: string;
+  authorizerGroups?: string[];
+  responseToJson?: boolean;
+};
+
+export type HandlerMockExecuteResult<T = any> = Omit<APIGatewayProxyResult, 'body'> & { body: T };

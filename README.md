@@ -1,36 +1,36 @@
-# serverless-testing
+# @dustfoundation/serverless-testing
 
-Library for testing serverless applications. Think about tests, not about mocks.
+Library for testing serverless applications.
 
-## Utils
+## Installation
 
-* stringifyParams – object output for parameterized tests
-* getRandomFloat – random integer/float number between range
+```sh
+npm install --save @dustfoundation/serverless-testing
+```
 
-## Mocks
+## Features
 
-### AWS API Gateway Proxy Handler
+### Mock API Gateway Proxy Handler
 
 ```ts
-import { HandlerMock } from '@dustfoundation/serverless-testing';
+import { mockHandler } from '@dustfoundation/serverless-testing';
 import { expect } from 'chai';
 
 describe('simple test', () => {
-  const handlerMock = new HandlerMock(handler);
-
   it('GIVEN valid data THEN 201', async () => {
-    // handlerMock.execute<T> - T is optional generic that relates to response body type
-    const { statusCode, body } = await handlerMock
+    // mockHandler.execute<T> - T is optional generic that describes response body type
+    const { statusCode, body } = await mockHandler(handler)
       .execute<{ users: string[] }>({
         // All fields are optional
-        authorizerId: 'your custom authorizer id, default - uuid v4',
+        authorizerId: 'YourCustomAuthorizerId, default - uuid v4',
+        authorizerGroups: ['YourCustomAuthorizerGroup'],
         pathParameters: { field: 'some' },
         queryStringParameters: { field: 'some' },
         body: JSON.stringify({ field: 'some' }),
         headers: { field: 'some' },
         responseToJson: true, // parse response body as json
         // ... and other
-      })
+      });
 
     expect(statusCode).eql(201);
     expect(body.users).lengthOf(5);
@@ -38,24 +38,17 @@ describe('simple test', () => {
 });
 ```
 
-### AWS DynamoDB + Dynamoose (optional)
+### Stringify Params
+
+Utility for parameterized tests.
 
 ```ts
-import { DdbMock } from '@dustfoundation/serverless-testing';
+import { stringifyParams } from '@dustfoundation/serverless-testing';
 
-describe('simple test', () => {
-  const ddbMock = new DdbMock();
-
-  afterEach(() => ddbMock.restore());
-
-  it('GIVEN valid data THEN 201', async () => {
-    ddbMock.onGetItem((params) => ({
-      Item: {
-        field: { S: 'some' },
-      },
-    }));
-
-    // DynamoDB Get Request is now mocked and returns your data when executed!
+const dataSet = [{ symbol: "BTC" }, { symbol: "ETH" }];
+for (const data of dataSet) {
+  it(`Data ${stringifyParams(data)}`, async () => {
+    // ...
   });
-});
+}
 ```

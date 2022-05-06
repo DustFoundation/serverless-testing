@@ -4,6 +4,7 @@
 /tmp
 /.build
 /.serverless
+.terraform
 
 # Local env files
 /**/.env.local
@@ -24,6 +25,3 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-
-# Terraform
-*.terraform/

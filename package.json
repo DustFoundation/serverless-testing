@@ -1,6 +1,7 @@
 {
   "name": "@dustfoundation/serverless-testing",
-  "version": "0.1.7",
+  "version": "1.0.0",
+  "description": "Library for testing serverless applications.",
   "repository": "https://github.com/DustFoundation/serverless-testing",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,25 +9,24 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p tsconfig.build.json",
+    "test": "mocha -r ts-node/register 'src/**/*.test.ts'",
     "lint": "eslint . --fix"
   },
-  "dependencies": {
-    "aws-sdk": "^2.1125.0",
-    "aws-sdk-mock": "^5.7.0"
-  },
   "devDependencies": {
-    "@dustfoundation/eslint-config": "github:DustFoundation/eslint-config#v2.2.0",
-    "@dustfoundation/prettier-config": "github:DustFoundation/prettier-config#v2.1.0",
-    "@dustfoundation/ts-config": "github:DustFoundation/ts-config#v2.1.0",
+    "@dustfoundation/eslint-config": "^2.3.1",
+    "@dustfoundation/prettier-config": "^2.3.0",
+    "@dustfoundation/ts-config": "^2.3.1",
     "@types/aws-lambda": "^8.10.95",
-    "@types/node": "^14.18.12",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^14.18.16",
+    "chai": "^4.3.6",
     "eslint": "^8.14.0",
+    "mocha": "^9.2.2",
     "prettier": "^2.6.2",
+    "ts-node": "^10.7.0",
     "typescript": "^4.6.4"
-  },
-  "optionalDependencies": {
-    "dynamoose": "^2.8.5"
   },
   "engines": {
     "node": ">=14"

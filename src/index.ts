@@ -1,4 +1,3 @@
-export * from './mocks/ddb';
-export * from './mocks/handler';
+export * from './functions/stringify-params';
 
-export * from './utils';
+export * from './mocks/handler';
