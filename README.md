@@ -1,5 +1,9 @@
 # @dustfoundation/serverless-testing
 
+![CI](https://github.com/DustFoundation/serverless-testing/actions/workflows/ci.yml/badge.svg)
+[![NPM Version](https://badgen.net/npm/v/@dustfoundation/serverless-testing)](https://npmjs.com/package/@dustfoundation/serverless-testing)
+[![Minimum Node.js Version](https://badgen.net/npm/node/@dustfoundation/serverless-testing)](https://npmjs.com/package/@dustfoundation/serverless-testing)
+
 Library for testing serverless applications.
 
 ## Installation
