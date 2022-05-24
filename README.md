@@ -41,3 +41,22 @@ describe('simple test', () => {
   });
 });
 ```
+
+### Mock DynamoDB Stream Handler
+
+```ts
+import { mockDDBStreamHandler } from '@dustfoundation/serverless-testing';
+import { expect } from 'chai';
+
+describe('simple test', () => {
+  it('GIVEN valid data THEN success', async () => {
+    // mockDDBStreamHandler.execute<T> - T is optional generic that describes response type
+    const users = await mockDDBStreamHandler(handler)
+      .execute<string[]>({
+        records: [], // DynamoDB Stream Records
+      });
+
+    expect(users).lengthOf(5);
+  });
+});
+```
