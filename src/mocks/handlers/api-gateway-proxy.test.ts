@@ -5,7 +5,7 @@ import { mockAPIGatewayProxyHandler } from './api-gateway-proxy';
 describe('mocks/handlers/api-gateway-proxy', () => {
   const handler = async (): Promise<{ statusCode: number; body: string }> => ({
     statusCode: 201,
-    body: JSON.stringify({ users: Array.from({ length: 5 }).fill({ id: randomUUID() }) }),
+    body: JSON.stringify({ users: Array.from({ length: 5 }).fill(randomUUID()) }),
   });
 
   it('default', async () => {
