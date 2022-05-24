@@ -17,13 +17,13 @@ npm install --save @dustfoundation/serverless-testing
 ### Mock API Gateway Proxy Handler
 
 ```ts
-import { mockHandler } from '@dustfoundation/serverless-testing';
+import { mockAPIGatewayProxyHandler } from '@dustfoundation/serverless-testing';
 import { expect } from 'chai';
 
 describe('simple test', () => {
   it('GIVEN valid data THEN 201', async () => {
-    // mockHandler.execute<T> - T is optional generic that describes response body type
-    const { statusCode, body } = await mockHandler(handler)
+    // mockAPIGatewayProxyHandler.execute<T> - T is optional generic that describes response body type
+    const { statusCode, body } = await mockAPIGatewayProxyHandler(handler)
       .execute<{ users: string[] }>({
         // All fields are optional
         authorizerId: 'YourCustomAuthorizerId, default - uuid v4',
@@ -40,19 +40,4 @@ describe('simple test', () => {
     expect(body.users).lengthOf(5);
   });
 });
-```
-
-### Stringify Params
-
-Utility for parameterized tests.
-
-```ts
-import { stringifyParams } from '@dustfoundation/serverless-testing';
-
-const dataSet = [{ symbol: "BTC" }, { symbol: "ETH" }];
-for (const data of dataSet) {
-  it(`Data ${stringifyParams(data)}`, async () => {
-    // ...
-  });
-}
 ```

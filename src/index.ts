@@ -1,3 +1,1 @@
-export * from './functions/stringify-params';
-
-export * from './mocks/handler';
+export * from './mocks/handlers/api-gateway-proxy';

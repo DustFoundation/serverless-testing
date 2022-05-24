@@ -1,3 +1,0 @@
-describe('functions/stringifyParams', () => {
-  // TODO
-});
