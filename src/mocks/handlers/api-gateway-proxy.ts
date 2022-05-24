@@ -1,11 +1,12 @@
 import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { randomUUID } from 'node:crypto';
+import { fakeContext } from '../handlers';
 
-export function mockHandler(handler: APIGatewayProxyHandler): HandlerMock {
-  return new HandlerMock(handler);
+export function mockAPIGatewayProxyHandler(handler: APIGatewayProxyHandler): APIGatewayProxyHandlerMock {
+  return new APIGatewayProxyHandlerMock(handler);
 }
 
-export class HandlerMock {
+export class APIGatewayProxyHandlerMock {
   private readonly handler: APIGatewayProxyHandler;
 
   constructor(handler: APIGatewayProxyHandler) {
@@ -13,8 +14,8 @@ export class HandlerMock {
   }
 
   public async execute<T = any>(
-    options: HandlerMockExecuteOptions = {},
-  ): Promise<HandlerMockExecuteResult<T> | never> {
+    options: APIGatewayProxyHandlerMockExecuteOptions = {},
+  ): Promise<APIGatewayProxyHandlerMockExecuteResult<T>> {
     const response = await this.handler(
       {
         body: options.body ?? null,
@@ -69,20 +70,7 @@ export class HandlerMock {
         resource: '/path',
         stageVariables: null,
       },
-      {
-        awsRequestId: 'cl2g24jf500027kv3byg1efjp',
-        callbackWaitsForEmptyEventLoop: true,
-        functionName: 'functionName',
-        functionVersion: '$LATEST',
-        invokedFunctionArn: 'offline_invokedFunctionArn_for_functionName',
-        logGroupName: 'offline_logGroupName_for_functionName',
-        logStreamName: 'offline_logStreamName_for_functionName',
-        memoryLimitInMB: '128',
-        getRemainingTimeInMillis: () => 1,
-        done: () => null,
-        fail: () => null,
-        succeed: () => null,
-      },
+      fakeContext,
       () => null,
     );
 
@@ -95,15 +83,10 @@ export class HandlerMock {
   }
 }
 
-export type HandlerMockExecuteOptions = Partial<
+export type APIGatewayProxyHandlerMockExecuteOptions = Partial<
   Pick<
     APIGatewayProxyEvent,
-    | 'body'
-    | 'headers'
-    | 'httpMethod'
-    | 'isBase64Encoded'
-    | 'pathParameters'
-    | 'queryStringParameters'
+    'body' | 'headers' | 'httpMethod' | 'isBase64Encoded' | 'pathParameters' | 'queryStringParameters'
   >
 > & {
   authorizerId?: string;
@@ -111,4 +94,6 @@ export type HandlerMockExecuteOptions = Partial<
   responseToJson?: boolean;
 };
 
-export type HandlerMockExecuteResult<T = any> = Omit<APIGatewayProxyResult, 'body'> & { body: T };
+export type APIGatewayProxyHandlerMockExecuteResult<T = any> = Omit<APIGatewayProxyResult, 'body'> & {
+  body: T;
+};
