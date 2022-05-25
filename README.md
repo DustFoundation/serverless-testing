@@ -50,13 +50,11 @@ import { expect } from 'chai';
 
 describe('simple test', () => {
   it('GIVEN valid data THEN success', async () => {
-    // mockDDBStreamHandler.execute<T> - T is optional generic that describes response type
-    const users = await mockDDBStreamHandler(handler)
-      .execute<string[]>({
-        records: [], // DynamoDB Stream Records
-      });
+    await mockDDBStreamHandler(handler).execute({
+      records: [], // DynamoDB Stream Records
+    });
 
-    expect(users).lengthOf(5);
+    // You can test handler with .commandCalls(), etc...
   });
 });
 ```
