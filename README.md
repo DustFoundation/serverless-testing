@@ -58,3 +58,37 @@ describe('simple test', () => {
   });
 });
 ```
+
+### Mock SNS Handler
+
+```ts
+import { mockSNSHandler } from '@dustfoundation/serverless-testing';
+import { expect } from 'chai';
+
+describe('simple test', () => {
+  it('GIVEN valid data THEN success', async () => {
+    await mockSNSHandler(handler).execute({
+      records: [], // SNS Records
+    });
+
+    // You can test handler with .commandCalls(), etc...
+  });
+});
+```
+
+### Mock SQS Handler
+
+```ts
+import { mockSQSHandler } from '@dustfoundation/serverless-testing';
+import { expect } from 'chai';
+
+describe('simple test', () => {
+  it('GIVEN valid data THEN success', async () => {
+    await mockSQSHandler(handler).execute({
+      records: [], // SQS Records
+    });
+
+    // You can test handler with .commandCalls(), etc...
+  });
+});
+```
