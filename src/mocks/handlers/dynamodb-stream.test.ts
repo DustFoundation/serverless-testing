@@ -6,9 +6,7 @@ describe('mocks/handlers/dynamodb-stream', () => {
 
   it('default', async () => {
     await mockDDBStreamHandler(handler).execute({
-      records: [], // DynamoDB Stream Records
+      records: [],
     });
-
-    // You can test handler with .commandCalls(), etc...
   });
 });
