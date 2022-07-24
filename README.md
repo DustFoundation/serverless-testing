@@ -27,7 +27,7 @@ describe('simple test', () => {
       .execute<{ users: string[] }>({
         // All fields are optional
         authorizerId: 'YourCustomAuthorizerId, default - uuid v4',
-        authorizerGroups: ['YourCustomAuthorizerGroup'],
+        authorizerGroups: ['YourCustomAuthorizerGroup1', 'YourCustomAuthorizerGroup2'].join(';'),
         pathParameters: { field: 'some' },
         queryStringParameters: { field: 'some' },
         body: JSON.stringify({ field: 'some' }),
