@@ -35,7 +35,7 @@ export class APIGatewayProxyHandlerMock {
             scopes: undefined,
             principalId: 'offlineContext_authorizer_principalId',
             id: options.authorizerId ?? randomUUID(),
-            groups: options.authorizerGroups ?? [],
+            groups: options.authorizerGroups ?? '',
           },
           domainName: 'offlineContext_domainName',
           domainPrefix: 'offlineContext_domainPrefix',
@@ -90,7 +90,7 @@ export type APIGatewayProxyHandlerMockExecuteOptions = Partial<
   >
 > & {
   authorizerId?: string;
-  authorizerGroups?: string[];
+  authorizerGroups?: string;
   responseToJson?: boolean;
 };
 
