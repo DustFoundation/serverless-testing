@@ -1,4 +1,4 @@
-import { SQSEvent, SQSHandler } from 'aws-lambda';
+import type { SQSEvent, SQSHandler } from 'aws-lambda';
 import { fakeContext } from '../handlers';
 
 export function mockSQSHandler(handler: SQSHandler): SQSHandlerMock {

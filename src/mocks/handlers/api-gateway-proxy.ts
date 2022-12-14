@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
+import type { APIGatewayProxyEvent, APIGatewayProxyHandler, APIGatewayProxyResult } from 'aws-lambda';
 import { randomUUID } from 'node:crypto';
 import { fakeContext } from '../handlers';
 
@@ -74,7 +74,9 @@ export class APIGatewayProxyHandlerMock {
       () => null,
     );
 
-    if (!response) throw new Error('No Response');
+    if (!response) {
+      throw new Error('No Response');
+    }
 
     return {
       ...response,

@@ -1,4 +1,4 @@
-import { SNSEvent, SNSHandler } from 'aws-lambda';
+import type { SNSEvent, SNSHandler } from 'aws-lambda';
 import { fakeContext } from '../handlers';
 
 export function mockSNSHandler(handler: SNSHandler): SNSHandlerMock {

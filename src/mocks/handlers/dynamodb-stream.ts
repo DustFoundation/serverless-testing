@@ -1,4 +1,4 @@
-import { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda';
+import type { DynamoDBStreamEvent, DynamoDBStreamHandler } from 'aws-lambda';
 import { fakeContext } from '../handlers';
 
 export function mockDDBStreamHandler(handler: DynamoDBStreamHandler): DDBStreamHandlerMock {
