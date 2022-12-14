@@ -1,6 +1,6 @@
 {
   "name": "@dustfoundation/serverless-testing",
-  "version": "2.3.0",
+  "version": "3.1.1",
   "description": "Library for testing serverless applications.",
   "repository": "https://github.com/DustFoundation/serverless-testing",
   "main": "dist/index.js",
