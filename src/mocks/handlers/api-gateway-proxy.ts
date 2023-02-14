@@ -28,7 +28,7 @@ export class APIGatewayProxyHandlerMock {
         path: '/',
         resource: '/',
         stageVariables: null,
-        requestContext: null as any,
+        requestContext: {} as any,
         ...options.event,
         headers: { 'Content-Type': 'application/json', ...options.event?.headers },
       },
