@@ -25,15 +25,19 @@ describe('simple test', () => {
     // mockAPIGatewayProxyHandler.execute<T> - T is optional generic that describes response body type
     const { statusCode, body } = await mockAPIGatewayProxyHandler(handler)
       .execute<{ users: string[] }>({
-        // All fields are optional
-        authorizerId: 'YourCustomAuthorizerId, default - uuid v4',
-        authorizerGroups: ['YourCustomAuthorizerGroup1', 'YourCustomAuthorizerGroup2'].join(';'),
-        pathParameters: { field: 'some' },
-        queryStringParameters: { field: 'some' },
-        body: JSON.stringify({ field: 'some' }),
-        headers: { field: 'some' },
-        responseToJson: true, // parse response body as json
-        // ... and other
+        event: {
+          pathParameters: { field: 'some' },
+          queryStringParameters: { field: 'some' },
+          body: JSON.stringify({ field: 'some' }),
+          headers: { field: 'some' },
+          requestContext: {
+            authorizer: {
+              id: 'YourCustomAuthorizerId',
+              groups: ['YourCustomAuthorizerGroup1', 'YourCustomAuthorizerGroup2'].join(';'),
+            },
+          },
+        },
+        responseToJson: true,
       });
 
     expect(statusCode).eql(201);
