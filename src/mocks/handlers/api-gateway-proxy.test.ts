@@ -10,12 +10,18 @@ describe('mocks/handlers/api-gateway-proxy', () => {
 
   it('default', async () => {
     const { statusCode, body } = await mockAPIGatewayProxyHandler(handler).execute<{ users: string[] }>({
-      authorizerId: 'YourCustomAuthorizerId, default - uuid v4',
-      authorizerGroups: ['YourCustomAuthorizerGroup1', 'YourCustomAuthorizerGroup2'].join(';'),
-      pathParameters: { field: 'some' },
-      queryStringParameters: { field: 'some' },
-      body: JSON.stringify({ field: 'some' }),
-      headers: { field: 'some' },
+      event: {
+        pathParameters: { field: 'some' },
+        queryStringParameters: { field: 'some' },
+        body: JSON.stringify({ field: 'some' }),
+        headers: { field: 'some' },
+        requestContext: {
+          authorizer: {
+            id: 'YourCustomAuthorizerId',
+            groups: ['YourCustomAuthorizerGroup1', 'YourCustomAuthorizerGroup2'].join(';'),
+          },
+        },
+      },
       responseToJson: true,
     });
 
